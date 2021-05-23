@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class ThemeProvider extends ChangeNotifier {
+/// 全局主题管理
+class ThemeState extends ChangeNotifier {
   var defaultThemeData = ThemeData(primarySwatch: Colors.blue);
   ThemeData _themeData;
 

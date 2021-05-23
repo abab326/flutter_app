@@ -1,5 +1,12 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/ThemeProvider.dart';
+import 'package:flutter_app/configs/application.dart';
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/pages/hone_page.dart';
+import 'package:flutter_app/providers/LocaleState.dart';
+import 'package:flutter_app/providers/ThemeState.dart';
+import 'package:flutter_app/routers/routes.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -10,63 +17,43 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    FluroRouter router = FluroRouter();
+    Application.router = router;
+    Routes.configureRoutes(Application.router);
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => ThemeProvider())],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: context.watch<ThemeProvider>().themeData,
-        home: MyHomePage(title: 'Flutter Demo Home Page'),
-      ),
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeState()),
+        ChangeNotifierProvider(create: (_) => LocaleState()),
+      ],
+      child: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: context.watch<ThemeState>().themeData,
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      locale: context.watch<LocaleState>().local,
+      onGenerateRoute: Application.router.generator,
+      initialRoute: "/",
+      home: HomePage(),
     );
   }
 }

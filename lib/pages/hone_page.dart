@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/configs/application.dart';
+import 'package:flutter_app/generated/l10n.dart';
+import 'package:flutter_app/routers/routes.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,10 +15,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("hone_page"),
+        title: Text(S.of(context).title),
       ),
       body: Center(
-        child: Text("hone_page"),
+        child: TextButton(
+          onPressed: ()=>Application.router.navigateTo(context, Routes.login),
+          child: Text("页面跳转"),
+        ),
       ),
     );
   }
