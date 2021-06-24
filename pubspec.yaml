@@ -38,8 +38,12 @@ dependencies:
   dio: ^4.0.0
   # 网络状态
   connectivity: ^3.0.4
-  # flutter 类库
+  # flustars 类库
   flustars: ^2.0.1
+  wechat_assets_picker: ^5.5.4
+  photo_view: ^0.11.1
+  flutter_picker: ^2.0.1
+  flutter_swiper: ^1.1.6
 
 dev_dependencies:
   flutter_test:

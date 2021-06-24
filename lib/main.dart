@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/configs/application.dart';
 import 'package:flutter_app/generated/l10n.dart';
 import 'package:flutter_app/pages/hone_page.dart';
+import 'package:flutter_app/pages/startup.dart';
 import 'package:flutter_app/providers/LocaleState.dart';
 import 'package:flutter_app/providers/ThemeState.dart';
 import 'package:flutter_app/routers/routes.dart';
@@ -17,27 +18,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    /// 路由初始化
     FluroRouter router = FluroRouter();
     Application.router = router;
     Routes.configureRoutes(Application.router);
+    /// 全局状态管理配置
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeState()),
         ChangeNotifierProvider(create: (_) => LocaleState()),
       ],
-      child: MyHomePage(),
+      child: StartPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+class StartPage extends StatelessWidget {
+  StartPage({Key key}) : super(key: key);
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       locale: context.watch<LocaleState>().local,
       onGenerateRoute: Application.router.generator,
       initialRoute: "/",
-      home: HomePage(),
+      home: StartUpPage(),
     );
   }
 }

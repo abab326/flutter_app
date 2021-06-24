@@ -21,7 +21,7 @@ class HttpUtils {
         /// 请求的Content-Type，默认值是"application/json; charset=utf-8".
         /// 如果您想以"application/x-www-form-urlencoded"格式编码请求数据,
         /// 可以设置此选项为 `Headers.formUrlEncodedContentType`,  这样[Dio]就会自动编码请求体.
-//        contentType: Headers.formUrlEncodedContentType, // 适用于post form表单提交
+        /// contentType: Headers.formUrlEncodedContentType,适用于post form表单提交
         responseType: ResponseType.json,
         validateStatus: (status) {
           // 不使用http状态码判断状态，使用AdapterInterceptor来处理（适用于标准REST风格）
